@@ -9,8 +9,13 @@ public class MainView extends JFrame {
         super("LicLacMoe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        BoardView boardView = new BoardView();
+
+
         setSize(400, 400);
         setLayout(new BorderLayout());
+
+        add(boardView, BorderLayout.CENTER);
         setVisible(true);
     }
 
