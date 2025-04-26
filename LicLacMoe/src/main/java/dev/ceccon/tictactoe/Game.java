@@ -36,6 +36,7 @@ public class Game {
     }
 
     private void setStatus(GameStatus status) {
+        System.out.println(status);
         this.status = status;
     }
 
@@ -45,8 +46,12 @@ public class Game {
     }
 
     public boolean makeMove(int row, int col) {
+        if (status != GameStatus.PLAYING) return false;
         if (!checkAvailable(row, col)) return false;
+
         cells[row][col] = currentPlayer;
+
+        evaluateStatus();
         switchPlayer();
         return true;
     }

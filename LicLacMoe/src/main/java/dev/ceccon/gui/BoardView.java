@@ -45,11 +45,14 @@ public class BoardView extends JPanel {
         if (!game.checkAvailable(row, col)) return;
 
         Player currentPlayer = game.getCurrentPlayer();
-        game.makeMove(row, col);
-        buttons[row][col].setText(playerIcon(currentPlayer));
-        buttons[row][col].setForeground(playerColor(currentPlayer));
+        boolean moveWasSuccessful = game.makeMove(row, col);
 
-        System.out.println("Move player " + currentPlayer + " (" + row + ", " + col + ")");
+        if (moveWasSuccessful) {
+            buttons[row][col].setText(playerIcon(currentPlayer));
+            buttons[row][col].setForeground(playerColor(currentPlayer));
+
+            System.out.println("Move player " + currentPlayer + " (" + row + ", " + col + ")");
+        }
     }
 
     private String playerIcon(Player player) {
