@@ -66,4 +66,77 @@ public class GameTest {
         assertFalse(game.makeMove(0, 3));
         assertEquals(current, game.getCurrentPlayer());  // Still same player
     }
+
+    @Test
+    public void testGameStatusWhenXWinsHorizontally() {
+        Player[][] board = {
+                {Player.X, Player.X, Player.X},
+                {Player.O, Player.NONE, Player.O},
+                {Player.NONE, Player.NONE, Player.NONE}
+        };
+        game.setCells(board);
+        game.evaluateStatus();
+        assertEquals(GameStatus.X_WON, game.getStatus());
+    }
+
+    @Test
+    public void testGameStatusWhenOWinsVertically() {
+        Player[][] board = {
+                {Player.O, Player.X, Player.NONE},
+                {Player.O, Player.X, Player.NONE},
+                {Player.O, Player.NONE, Player.X}
+        };
+        game.setCells(board);
+        game.evaluateStatus();
+        assertEquals(GameStatus.O_WON, game.getStatus());
+    }
+
+    @Test
+    public void testGameStatusWhenXWinsDiagonallyTopLeftToBottomRight() {
+        Player[][] board = {
+                {Player.X, Player.O, Player.NONE},
+                {Player.O, Player.X, Player.NONE},
+                {Player.NONE, Player.O, Player.X}
+        };
+        game.setCells(board);
+        game.evaluateStatus();
+        assertEquals(GameStatus.X_WON, game.getStatus());
+    }
+
+    @Test
+    public void testGameStatusWhenOWinsDiagonallyTopRightToBottomLeft() {
+        Player[][] board = {
+                {Player.X, Player.X, Player.O},
+                {Player.X, Player.O, Player.NONE},
+                {Player.O, Player.NONE, Player.X}
+        };
+        game.setCells(board);
+        game.evaluateStatus();
+        assertEquals(GameStatus.O_WON, game.getStatus());
+    }
+
+    @Test
+    public void testGameStatusWhenDraw() {
+        Player[][] board = {
+                {Player.X, Player.O, Player.X},
+                {Player.X, Player.X, Player.O},
+                {Player.O, Player.X, Player.O}
+        };
+        game.setCells(board);
+        game.evaluateStatus();
+        assertEquals(GameStatus.DRAW, game.getStatus());
+    }
+
+    @Test
+    public void testGameStatusWhileStillPlaying() {
+        Player[][] board = {
+                {Player.X, Player.O, Player.NONE},
+                {Player.NONE, Player.X, Player.NONE},
+                {Player.O, Player.NONE, Player.NONE}
+        };
+        game.setCells(board);
+        game.evaluateStatus();
+        assertEquals(GameStatus.PLAYING, game.getStatus());
+    }
+
 }
