@@ -11,8 +11,10 @@ public class MainView extends JFrame {
         super("LicLacMoe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BoardView boardView = new BoardView(new Game());
-        InfosView infosView = new InfosView();
+        Game game = new Game();
+
+        BoardView boardView = new BoardView(game);
+        InfosView infosView = new InfosView(game);
 
 
         setSize(400, 400);
