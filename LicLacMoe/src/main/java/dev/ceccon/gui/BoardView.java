@@ -45,7 +45,7 @@ public class BoardView extends JPanel {
         if (!game.checkAvailable(row, col)) return;
 
         Player currentPlayer = game.getCurrentPlayer();
-        boolean moveWasSuccessful = game.makeMove(row, col);
+        boolean moveWasSuccessful = game.makeMove(row, col, Player.X);
 
         if (moveWasSuccessful) {
             buttons[row][col].setText(playerIcon(currentPlayer));

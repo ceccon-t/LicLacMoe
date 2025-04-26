@@ -55,8 +55,9 @@ public class Game {
         return cells[row][col] == Player.NONE;
     }
 
-    public boolean makeMove(int row, int col) {
+    public boolean makeMove(int row, int col, Player player) {
         if (status != GameStatus.PLAYING) return false;
+        if (player != currentPlayer) return false;
         if (!checkAvailable(row, col)) return false;
 
         cells[row][col] = currentPlayer;

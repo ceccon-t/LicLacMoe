@@ -22,7 +22,7 @@ public class GameTest {
     @Test
     public void testUnavailableCellReturnsFalse() {
         // Pretend a move has been made
-        game.makeMove(1, 1);  // Assuming this method exists or will exist
+        game.makeMove(1, 1, Player.X);
         assertFalse(game.checkAvailable(1, 1));
     }
 
@@ -46,24 +46,24 @@ public class GameTest {
     @Test
     public void testMakeValidMoveReturnsTrueAndSwitchesPlayer() {
         Player startingPlayer = game.getCurrentPlayer();
-        assertTrue(game.makeMove(0, 0));
+        assertTrue(game.makeMove(0, 0, startingPlayer));
         assertFalse(game.checkAvailable(0, 0));  // Cell should now be taken
         assertNotEquals(startingPlayer, game.getCurrentPlayer());  // Player should switch
     }
 
     @Test
     public void testMakeMoveOnOccupiedCellReturnsFalseAndDoesNotSwitchPlayer() {
-        game.makeMove(1, 1);  // Valid move
+        game.makeMove(1, 1, Player.X);  // Valid move
         Player afterFirstMove = game.getCurrentPlayer();
-        assertFalse(game.makeMove(1, 1));  // Try to overwrite
+        assertFalse(game.makeMove(1, 1, afterFirstMove));  // Try to overwrite
         assertEquals(afterFirstMove, game.getCurrentPlayer());  // No switch
     }
 
     @Test
     public void testMakeMoveOutOfBoundsReturnsFalseAndDoesNotSwitchPlayer() {
         Player current = game.getCurrentPlayer();
-        assertFalse(game.makeMove(-1, 0));
-        assertFalse(game.makeMove(0, 3));
+        assertFalse(game.makeMove(-1, 0, current));
+        assertFalse(game.makeMove(0, 3, current));
         assertEquals(current, game.getCurrentPlayer());  // Still same player
     }
 
