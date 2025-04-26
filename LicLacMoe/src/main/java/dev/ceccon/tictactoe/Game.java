@@ -1,10 +1,15 @@
 package dev.ceccon.tictactoe;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Game {
 
     private Player currentPlayer = Player.X;
     private Player[][] cells;
     private GameStatus status = GameStatus.PLAYING;
+
+    private List<GameStatusChangedObserver> gameStatusChangedObservers = new LinkedList<>();
 
     public Game() {
         cells = new Player[3][3];
@@ -36,8 +41,13 @@ public class Game {
     }
 
     private void setStatus(GameStatus status) {
-        System.out.println(status);
         this.status = status;
+        System.out.println(status);
+        gameStatusChangedObservers.stream().forEach(o -> o.gameStatusChanged(status));
+    }
+
+    public void addGameStatusChangedObserver(GameStatusChangedObserver observer) {
+        gameStatusChangedObservers.add(observer);
     }
 
     public boolean checkAvailable(int row, int col) {
