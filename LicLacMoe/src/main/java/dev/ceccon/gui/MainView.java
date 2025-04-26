@@ -1,5 +1,7 @@
 package dev.ceccon.gui;
 
+import dev.ceccon.tictactoe.Game;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class MainView extends JFrame {
         super("LicLacMoe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BoardView boardView = new BoardView();
+        BoardView boardView = new BoardView(new Game());
         InfosView infosView = new InfosView();
 
 

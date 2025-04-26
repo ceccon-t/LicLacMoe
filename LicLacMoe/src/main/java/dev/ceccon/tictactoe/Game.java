@@ -2,7 +2,7 @@ package dev.ceccon.tictactoe;
 
 public class Game {
 
-    private Player currentPlayer;
+    private Player currentPlayer = Player.X;
     private Player[][] cells;
 
     public Game() {
