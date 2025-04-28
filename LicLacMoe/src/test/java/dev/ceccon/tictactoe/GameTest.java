@@ -3,6 +3,7 @@ package dev.ceccon.tictactoe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class GameTest {
 
@@ -10,7 +11,8 @@ public class GameTest {
 
     @BeforeEach
     public void setUp() {
-        game = new Game();
+        LLMPlayer llmPlayer = mock(LLMPlayer.class);
+        game = new Game(llmPlayer);
     }
 
     @Test

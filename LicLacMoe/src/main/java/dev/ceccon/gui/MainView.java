@@ -2,6 +2,7 @@ package dev.ceccon.gui;
 
 import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.tictactoe.Game;
+import dev.ceccon.tictactoe.LLMPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,8 @@ public class MainView extends JFrame {
         super("LicLacMoe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Game game = new Game();
+        LLMPlayer llmPlayer = new LLMPlayer(apiConfig);
+        Game game = new Game(llmPlayer);
 
         BoardView boardView = new BoardView(game);
         InfosView infosView = new InfosView(game);

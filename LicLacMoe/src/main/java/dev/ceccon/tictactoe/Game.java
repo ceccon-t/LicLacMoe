@@ -11,7 +11,7 @@ public class Game {
 
     private List<GameStatusChangedObserver> gameStatusChangedObservers = new LinkedList<>();
 
-    public Game() {
+    public Game(LLMPlayer llmPlayer) {
         cells = new Player[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
