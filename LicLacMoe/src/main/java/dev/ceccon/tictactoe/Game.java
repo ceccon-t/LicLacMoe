@@ -10,6 +10,7 @@ public class Game {
     private GameStatus status = GameStatus.PLAYING;
 
     private List<GameStatusChangedObserver> gameStatusChangedObservers = new LinkedList<>();
+    private List<CellChangedObserver> cellChangedObservers = new LinkedList<>();
 
     public Game(LLMPlayer llmPlayer) {
         cells = new Player[3][3];
@@ -50,6 +51,10 @@ public class Game {
         gameStatusChangedObservers.add(observer);
     }
 
+    public void addCellChangedObserver(CellChangedObserver observer) {
+        cellChangedObservers.add(observer);
+    }
+
     public boolean checkAvailable(int row, int col) {
         if (row < 0 || row > 2 || col < 0 || col > 2) return false;
         return cells[row][col] == Player.NONE;
@@ -60,7 +65,7 @@ public class Game {
         if (player != currentPlayer) return false;
         if (!checkAvailable(row, col)) return false;
 
-        cells[row][col] = currentPlayer;
+        markCell(row, col, currentPlayer);
 
         evaluateStatus();
         switchPlayer();
@@ -117,6 +122,12 @@ public class Game {
         // Draw
         setStatus(GameStatus.DRAW);
 
+    }
+
+    private void markCell(int row, int col, Player player) {
+        cells[row][col] = player;
+
+        cellChangedObservers.stream().forEach(o -> o.cellChanged(row, col, player));
     }
 
     private void playerWon(Player player) {

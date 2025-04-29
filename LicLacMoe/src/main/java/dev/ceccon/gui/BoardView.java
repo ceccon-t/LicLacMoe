@@ -1,12 +1,13 @@
 package dev.ceccon.gui;
 
+import dev.ceccon.tictactoe.CellChangedObserver;
 import dev.ceccon.tictactoe.Game;
 import dev.ceccon.tictactoe.Player;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardView extends JPanel {
+public class BoardView extends JPanel implements CellChangedObserver {
 
     private static final String X_ICON = "X";
     private static final String O_ICON = "O";
@@ -39,20 +40,14 @@ public class BoardView extends JPanel {
                 add(button);
             }
         }
+
+        game.addCellChangedObserver(this);
     }
 
     private void handleClick(int row, int col) {
         if (!game.checkAvailable(row, col)) return;
 
-        Player currentPlayer = game.getCurrentPlayer();
-        boolean moveWasSuccessful = game.makeMove(row, col, Player.X);
-
-        if (moveWasSuccessful) {
-            buttons[row][col].setText(playerIcon(currentPlayer));
-            buttons[row][col].setForeground(playerColor(currentPlayer));
-
-            System.out.println("Move player " + currentPlayer + " (" + row + ", " + col + ")");
-        }
+        game.makeMove(row, col, Player.X);
     }
 
     private String playerIcon(Player player) {
@@ -71,4 +66,11 @@ public class BoardView extends JPanel {
         };
     }
 
+    @Override
+    public void cellChanged(int row, int col, Player player) {
+        buttons[row][col].setText(playerIcon(player));
+        buttons[row][col].setForeground(playerColor(player));
+
+        System.out.println("Move player " + player + " (" + row + ", " + col + ")");
+    }
 }
