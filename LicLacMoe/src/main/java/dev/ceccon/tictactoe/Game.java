@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Game {
 
+    private LLMPlayer llmPlayer;
+
     private Player currentPlayer = Player.X;
     private Player[][] cells;
     private GameStatus status = GameStatus.PLAYING;
@@ -13,6 +15,7 @@ public class Game {
     private List<CellChangedObserver> cellChangedObservers = new LinkedList<>();
 
     public Game(LLMPlayer llmPlayer) {
+        this.llmPlayer = llmPlayer;
         cells = new Player[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -58,6 +61,17 @@ public class Game {
     public boolean checkAvailable(int row, int col) {
         if (row < 0 || row > 2 || col < 0 || col > 2) return false;
         return cells[row][col] == Player.NONE;
+    }
+
+    public boolean makeHumanMove(int row, int col) {
+        boolean successfulMove = makeMove(row, col, Player.X);
+
+        if (successfulMove) {
+            Cell llmMove = llmPlayer.getNextMove(cells);
+            makeMove(llmMove.row(), llmMove.col(), Player.O);
+        }
+
+        return successfulMove;
     }
 
     public boolean makeMove(int row, int col, Player player) {

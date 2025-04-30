@@ -47,7 +47,7 @@ public class BoardView extends JPanel implements CellChangedObserver {
     private void handleClick(int row, int col) {
         if (!game.checkAvailable(row, col)) return;
 
-        game.makeMove(row, col, Player.X);
+        game.makeHumanMove(row, col);
     }
 
     private String playerIcon(Player player) {
