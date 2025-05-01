@@ -5,6 +5,10 @@ import java.util.List;
 
 public class Game {
 
+    private static final String X_ICON = "X";
+    private static final String O_ICON = "O";
+    private static final String NONE_ICON = " ";
+
     private LLMPlayer llmPlayer;
 
     private Player currentPlayer = Player.X;
@@ -136,6 +140,26 @@ public class Game {
         // Draw
         setStatus(GameStatus.DRAW);
 
+    }
+
+    public String getBoardStringified() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(iconAt(0, 0)).append(" | ").append(iconAt(0, 1)).append(" | ").append(iconAt(0, 2));
+        builder.append("\n----------\n");
+        builder.append(iconAt(1, 0)).append(" | ").append(iconAt(1, 1)).append(" | ").append(iconAt(1, 2));
+        builder.append("\n----------\n");
+        builder.append(iconAt(2, 0)).append(" | ").append(iconAt(2, 1)).append(" | ").append(iconAt(2, 2));
+        builder.append("\n");
+
+        return builder.toString();
+    }
+
+    private String iconAt(int row, int col) {
+        return switch (cells[row][col]) {
+            case X -> X_ICON;
+            case O -> O_ICON;
+            case NONE -> NONE_ICON;
+        };
     }
 
     private void markCell(int row, int col, Player player) {
