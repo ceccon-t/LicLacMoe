@@ -3,6 +3,7 @@ package dev.ceccon;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import dev.ceccon.client.LLMClient;
 import dev.ceccon.config.LLMAPIConfig;
 import dev.ceccon.gui.MainView;
 
@@ -14,11 +15,12 @@ public class LicLacMoe {
         System.out.println("Starting LicLacMoe...");
 
         LLMAPIConfig apiConfig = new LLMAPIConfig();
+        LLMClient llmClient = new LLMClient(apiConfig);
 
         parseArguments(args, apiConfig);
 
         SwingUtilities.invokeLater(() -> {
-            new MainView(apiConfig);
+            new MainView(llmClient);
         });
     }
 

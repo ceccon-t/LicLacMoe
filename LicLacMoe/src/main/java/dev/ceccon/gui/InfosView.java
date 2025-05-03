@@ -14,7 +14,7 @@ public class InfosView extends JPanel implements GameStatusChangedObserver {
     public InfosView(Game game) {
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        label.setText("Games played: 0   X wins: 0   O wins: 0");
+        label.setText("Playing");
 
         add(label);
 

@@ -70,8 +70,8 @@ public class Game {
     public boolean makeHumanMove(int row, int col) {
         boolean successfulMove = makeMove(row, col, Player.X);
 
-        if (successfulMove) {
-            Cell llmMove = llmPlayer.getNextMove(cells);
+        if (successfulMove && status == GameStatus.PLAYING) {
+            Cell llmMove = llmPlayer.getNextMove(this);
             makeMove(llmMove.row(), llmMove.col(), Player.O);
         }
 
@@ -122,7 +122,7 @@ public class Game {
         // Left bottom to right top
         if (cells[2][0] != Player.NONE
             && cells[2][0] == cells[1][1]
-            && cells[1][1] == cells[2][0]) {
+            && cells[1][1] == cells[0][2]) {
             playerWon(cells[2][0]);
             return;
         }
