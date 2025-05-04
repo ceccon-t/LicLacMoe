@@ -17,15 +17,11 @@ public class Game {
 
     private List<GameStatusChangedObserver> gameStatusChangedObservers = new LinkedList<>();
     private List<CellChangedObserver> cellChangedObservers = new LinkedList<>();
+    private List<ResetObserver> resetObservers = new LinkedList<>();
 
     public Game(LLMPlayer llmPlayer) {
         this.llmPlayer = llmPlayer;
-        cells = new Player[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                cells[i][j] = Player.NONE;
-            }
-        }
+        initialize();
     }
 
     public Player getCurrentPlayer() {
@@ -60,6 +56,10 @@ public class Game {
 
     public void addCellChangedObserver(CellChangedObserver observer) {
         cellChangedObservers.add(observer);
+    }
+
+    public void addResetObserver(ResetObserver observer) {
+        resetObservers.add(observer);
     }
 
     public boolean checkAvailable(int row, int col) {
@@ -143,7 +143,9 @@ public class Game {
     }
 
     public void reset() {
+        initialize();
 
+        resetObservers.forEach(ResetObserver::gameReset);
     }
 
     public String getBoardStringified() {
@@ -156,6 +158,17 @@ public class Game {
         builder.append("\n");
 
         return builder.toString();
+    }
+
+    private void initialize() {
+        currentPlayer = Player.X;
+        cells = new Player[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                cells[i][j] = Player.NONE;
+            }
+        }
+        status = GameStatus.PLAYING;
     }
 
     private String iconAt(int row, int col) {
