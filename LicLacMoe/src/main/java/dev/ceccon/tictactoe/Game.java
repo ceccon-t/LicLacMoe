@@ -142,6 +142,10 @@ public class Game {
 
     }
 
+    public void reset() {
+
+    }
+
     public String getBoardStringified() {
         StringBuilder builder = new StringBuilder();
         builder.append(iconAt(0, 0)).append(" | ").append(iconAt(0, 1)).append(" | ").append(iconAt(0, 2));
