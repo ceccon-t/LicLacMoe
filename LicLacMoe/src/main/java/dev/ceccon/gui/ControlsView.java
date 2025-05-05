@@ -13,7 +13,6 @@ public class ControlsView extends JPanel {
         JButton btnReset = new JButton("Reset");
         btnReset.addActionListener(e -> {
             game.reset();
-            System.out.println("Resetting...");
         });
 
         add(btnReset, BorderLayout.CENTER);

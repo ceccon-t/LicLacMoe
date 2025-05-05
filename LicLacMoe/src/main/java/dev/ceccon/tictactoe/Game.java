@@ -46,7 +46,6 @@ public class Game {
 
     private void setStatus(GameStatus status) {
         this.status = status;
-        System.out.println(status);
         gameStatusChangedObservers.stream().forEach(o -> o.gameStatusChanged(status));
     }
 

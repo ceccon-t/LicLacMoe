@@ -72,8 +72,6 @@ public class BoardView extends JPanel implements CellChangedObserver, ResetObser
     public void cellChanged(int row, int col, Player player) {
         buttons[row][col].setText(playerIcon(player));
         buttons[row][col].setForeground(playerColor(player));
-
-        System.out.println("Move player " + player + " (" + row + ", " + col + ")");
     }
 
     @Override
