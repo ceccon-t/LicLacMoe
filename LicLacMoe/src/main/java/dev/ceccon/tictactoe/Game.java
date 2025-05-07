@@ -70,8 +70,11 @@ public class Game {
         boolean successfulMove = makeMove(row, col, Player.X);
 
         if (successfulMove && status == GameStatus.PLAYING) {
-            Cell llmMove = llmPlayer.getNextMove(this);
-            makeMove(llmMove.row(), llmMove.col(), Player.O);
+            Thread aiMoveThread = new Thread(() -> {
+                Cell llmMove = llmPlayer.getNextMove(this);
+                makeMove(llmMove.row(), llmMove.col(), Player.O);
+            });
+            aiMoveThread.start();
         }
 
         return successfulMove;
