@@ -9,15 +9,7 @@ import java.io.IOException;
 
 public class LLMPlayer {
 
-    private LLMClient llmClient;
-    private ObjectMapper mapper = new ObjectMapper();
-
-    public LLMPlayer(LLMClient llmClient) {
-        this.llmClient = llmClient;
-    }
-
-    public Cell getNextMove(Game game) {
-        String systemPrompt = """
+    private final String SYSTEM_PROMPT = """
             You are playing a tic-tac-toe match. You are player O.
             You will receive a representation of the current state of the match, based on which you must make a move.
             You must answer in a JSON format, as an object with properties 'row' and 'col', representing the column and row of your move, respectively.
@@ -27,18 +19,26 @@ public class LLMPlayer {
             Try your best to win the game!
         """;
 
-        String currentState = game.getBoardStringified();
+    private LLMClient llmClient;
+    private ObjectMapper mapper = new ObjectMapper();
 
-        Chat chat = new Chat();
-        chat.addMessage("system", systemPrompt);
-        chat.addMessage("user", "\n" + currentState + "\n");
+    public LLMPlayer(LLMClient llmClient) {
+        this.llmClient = llmClient;
+    }
 
+    public Cell getNextMove(Game game) {
         Cell aiMove = new Cell(0, 0);
 
         boolean validMove = false;
         do {
             String aiResponse;
             try {
+                String currentState = game.getBoardStringified();
+
+                Chat chat = new Chat();
+                chat.addMessage("system", SYSTEM_PROMPT);
+                chat.addMessage("user", "\n" + currentState + "\n");
+
                 BlockResponse blockResponse = llmClient.getNextAIResponse(chat);
                 aiResponse = blockResponse.getContent();
                 aiMove = mapper.readValue(aiResponse, Cell.class);
@@ -51,7 +51,7 @@ public class LLMPlayer {
                 System.out.println("Error while trying to get AI Response: " + e.getMessage());
             }
 
-        } while (!validMove);
+        } while (game.getCurrentPlayer() == Player.O && !validMove);
 
 
         return aiMove;
