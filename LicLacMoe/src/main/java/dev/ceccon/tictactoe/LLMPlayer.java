@@ -40,7 +40,7 @@ public class LLMPlayer {
                 chat.addMessage("user", "\n" + currentState + "\n");
 
                 BlockResponse blockResponse = llmClient.getNextAIResponse(chat);
-                aiResponse = blockResponse.getContent();
+                aiResponse = removeThinkingSection(blockResponse.getContent());
                 aiMove = mapper.readValue(aiResponse, Cell.class);
                 if (game.checkAvailable(aiMove.row(), aiMove.col())) {
                     validMove = true;
@@ -55,6 +55,14 @@ public class LLMPlayer {
 
 
         return aiMove;
+    }
+
+    private String removeThinkingSection(String fullResponse) {
+        System.out.println("Full response:\n" + fullResponse);
+        String trimmedResponse = fullResponse.split("</think>")[1].trim();
+        System.out.println("==========");
+        System.out.println("Trimmed response:\n" + trimmedResponse);
+        return trimmedResponse;
     }
 
 }
