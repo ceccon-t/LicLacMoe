@@ -78,4 +78,16 @@ class LLMAPIConfigTest {
         assertEquals(streaming, streamingOnConfig);
     }
 
+    @Test
+    void getAndSetVerbose() {
+        boolean verbose = true;
+
+        LLMAPIConfig config = new LLMAPIConfig();
+        config.setVerbose(verbose);
+
+        boolean verboseOnConfig = config.isVerbose();
+
+        assertEquals(verbose, verboseOnConfig);
+    }
+
 }

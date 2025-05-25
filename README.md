@@ -61,6 +61,8 @@ Here is the list of command-line options available when starting the application
 
 - `-t <temperature>`: Specify the temperature to be used when generating text, the larger the temperature the more randomness it includes. <temperature> must be a decimal number, and usually fits in the [0.0-1.0) range. Make sure to use a dot (`.`) and not a comma to separate the parts of the number. Defaults to 0.9.
 
+- `-v <true|false>`: Verbose mode, specify if should log to console the raw answers received from the LLM.
+
 These options are independent of each other, and can be combined as desired and in any order. Examples of using some of them can be found in section "How to run" of readme.
 
 

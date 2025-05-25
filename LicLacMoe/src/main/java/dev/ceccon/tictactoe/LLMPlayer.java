@@ -58,10 +58,17 @@ public class LLMPlayer {
     }
 
     private String removeThinkingSection(String fullResponse) {
-        System.out.println("Full response:\n" + fullResponse);
-        String trimmedResponse = fullResponse.split("</think>")[1].trim();
-        System.out.println("==========");
-        System.out.println("Trimmed response:\n" + trimmedResponse);
+        String trimmedResponse = fullResponse;
+
+        if (fullResponse.contains("</think>")) {
+            trimmedResponse = fullResponse.split("</think>")[1].trim();
+        }
+
+        if (llmClient.isVerbose()) {
+            System.out.println("==========");
+            System.out.println("Response from LLM:\n" + fullResponse);
+            System.out.println("==========");
+        }
         return trimmedResponse;
     }
 

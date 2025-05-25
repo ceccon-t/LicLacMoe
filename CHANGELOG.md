@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Support for reasoning models that use "think" as tag for reasoning section
+- Verbose CLI option to log full responses received from LLM
 
 ### Changed
 

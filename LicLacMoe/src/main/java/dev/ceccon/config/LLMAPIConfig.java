@@ -9,6 +9,7 @@ public class LLMAPIConfig {
     private String model = "";
     private double temperature = 0.9;
     private boolean streaming = false;
+    private boolean verbose = false;
 
     public String getFullUrl() {
         return protocol + "://" + host + ":" + port + "/" + endpoint;
@@ -46,4 +47,11 @@ public class LLMAPIConfig {
         this.streaming = streaming;
     }
 
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
 }

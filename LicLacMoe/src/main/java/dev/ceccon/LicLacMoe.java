@@ -50,6 +50,11 @@ public class LicLacMoe {
             Double temperature = llmArgs.getTemperature();
             apiConfig.setTemperature(temperature);
         }
+
+        if (llmArgs.hasVerbose()) {
+            boolean verbose = llmArgs.getVerbose();
+            apiConfig.setVerbose(verbose);
+        }
     }
 
     static class LicLacMoeArgs {
@@ -77,6 +82,14 @@ public class LicLacMoe {
         )
         private Double temperature;
 
+        @Parameter(
+                names = {"-v", "--verbose"},
+                description = "Verbose logging of answers gotten from LLM",
+                required = false,
+                arity = 1
+        )
+        private Boolean verbose;
+
         public Integer getPort() {
             return port;
         }
@@ -89,6 +102,10 @@ public class LicLacMoe {
             return temperature;
         }
 
+        public boolean getVerbose() {
+            return verbose;
+        }
+
         public boolean hasPort() {
             return port != null;
         }
@@ -99,6 +116,10 @@ public class LicLacMoe {
 
         public boolean hasTemperature() {
             return temperature != null;
+        }
+
+        public boolean hasVerbose() {
+            return verbose != null;
         }
     }
 

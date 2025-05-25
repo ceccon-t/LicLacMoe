@@ -47,4 +47,8 @@ public class LLMClient {
         return responseDTO.toBlockResponse();
     }
 
+    public boolean isVerbose() {
+        return config.isVerbose();
+    }
+
 }

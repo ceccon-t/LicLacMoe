@@ -111,6 +111,53 @@ public class LicLacMoeTest {
     }
 
     @Test
+    void cliOptionVerboseWithoutValueThrowsException() {
+        String[] args = new String[]{"-v"};
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            LicLacMoe.parseArguments(args, new LLMAPIConfig());
+        });
+    }
+
+    @Test
+    void cliOptionVerboseWithNonBooleanValueThrowsException() {
+        String verbose = "error";
+        String[] args = new String[]{"-v", verbose};
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            LicLacMoe.parseArguments(args, new LLMAPIConfig());
+        });
+    }
+
+    @Test
+    void cliOptionVerboseWithTrueCausesVerboseOnAPIConfig() {
+        String verbose = "true";
+        String[] args = new String[]{"-v", verbose};
+
+        LLMAPIConfig apiConfig = new LLMAPIConfig();
+
+        LicLacMoe.parseArguments(args, apiConfig);
+
+        boolean verboseOnApiConfig = apiConfig.isVerbose();
+
+        assertEquals(Boolean.valueOf(verbose), verboseOnApiConfig);
+    }
+
+    @Test
+    void cliOptionVerboseWithFalseCausesNonVerboseOnAPIConfig() {
+        String verbose = "false";
+        String[] args = new String[]{"-v", verbose};
+
+        LLMAPIConfig apiConfig = new LLMAPIConfig();
+
+        LicLacMoe.parseArguments(args, apiConfig);
+
+        boolean verboseOnApiConfig = apiConfig.isVerbose();
+
+        assertEquals(Boolean.valueOf(verbose), verboseOnApiConfig);
+    }
+
+    @Test
     void cliOptionInexistentThrowsException() {
         String[] args = new String[]{"-thisisnotanoption"};
 

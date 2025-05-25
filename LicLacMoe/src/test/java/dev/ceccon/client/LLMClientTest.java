@@ -47,4 +47,24 @@ class LLMClientTest {
         }
     }
 
+    @Test
+    void recognizesVerbose() {
+        boolean verbose = true;
+        LLMAPIConfig apiConfig = new LLMAPIConfig();
+        apiConfig.setVerbose(verbose);
+
+        LLMClient client = new LLMClient(apiConfig);
+
+        boolean verboseFromClient = client.isVerbose();
+
+        assertEquals(verbose, verboseFromClient);
+
+        verbose = false;
+        apiConfig.setVerbose(verbose);
+
+        verboseFromClient = client.isVerbose();
+
+        assertEquals(verbose, verboseFromClient);
+    }
+
 }
